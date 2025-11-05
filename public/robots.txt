@@ -1,0 +1,23 @@
+# robots.txt for HuyHoangWatch
+
+User-agent: *
+Allow: /
+Allow: /shop
+Allow: /shop/product/
+
+# Disallow admin pages
+Disallow: /admin/
+Disallow: /api/
+
+# Disallow auth pages (don't index login/signup)
+Disallow: /auth/
+
+# Disallow cart and checkout (private user pages)
+Disallow: /cart
+Disallow: /checkout
+
+# Crawl-delay (optional, helps prevent server overload)
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://yourwebsite.com/sitemap.xml
