@@ -77,8 +77,17 @@ export function ShopHeader() {
           {/* <Link href="/shop" className="text-sm hover:underline">
             Cửa hàng
           </Link> */}
-          <Link href="/cart" className="relative text-sm hover:underline">
-            Giỏ hàng
+          <Link href="/cart" className="relative hover:opacity-80 transition-opacity">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="24" 
+              height="24" 
+              fill="currentColor" 
+              viewBox="0 0 16 16"
+              className="text-foreground"
+            >
+              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+            </svg>
             {cartCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-[#993333] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                 {cartCount}
