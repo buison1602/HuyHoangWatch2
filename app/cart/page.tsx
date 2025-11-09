@@ -196,8 +196,8 @@ export default function CartPage() {
             <div className="md:col-span-2 space-y-4">
               {cartItems.map((item) => (
                 <Card key={item.id}>
-                  <CardContent className="p-4">
-                    <div className="flex gap-4">
+                  <CardContent className="p-1 md:p-4">
+                    <div className="flex gap-2 md:gap-4">
                       {/* Product Image */}
                       <div className="flex-shrink-0">
                         <Image
@@ -205,7 +205,7 @@ export default function CartPage() {
                           alt={item.product.name}
                           width={144}
                           height={136}
-                          className="object-cover rounded"
+                          className="object-cover rounded w-[100px] h-[100px] md:w-[144px] md:h-[136px]"
                         />
                       </div>
 
