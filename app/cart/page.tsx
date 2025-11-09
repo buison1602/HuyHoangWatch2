@@ -35,6 +35,7 @@ interface CartItem {
     category_name?: string
     brand_name?: string
     image_url?: string
+    slug?: string
   }
 }
 
@@ -77,7 +78,7 @@ export default function CartPage() {
           `
           *,
           product:products(
-            id, name, price, gender, strap_type,
+            id, name, price, gender, strap_type, slug,
             categories(id, name),
             brands(id, name)
           )
@@ -109,6 +110,7 @@ export default function CartPage() {
             category_name: item.product.categories?.name || "",
             brand_name: item.product.brands?.name || "",
             image_url: imageMap.get(item.product.id) || "/placeholder.svg",
+            slug: item.product.slug,
           },
         }))
 
@@ -198,21 +200,29 @@ export default function CartPage() {
                 <Card key={item.id}>
                   <CardContent className="p-1 md:p-4">
                     <div className="flex gap-2 md:gap-4">
-                      {/* Product Image */}
-                      <div className="flex-shrink-0">
+                      {/* Product Image - Clickable */}
+                      <Link 
+                        href={`/shop/product/${item.product.slug}`}
+                        className="flex-shrink-0"
+                      >
                         <Image
                           src={item.product.image_url || "/placeholder.svg"}
                           alt={item.product.name}
                           width={144}
                           height={136}
-                          className="object-cover rounded w-[100px] h-[100px] md:w-[144px] md:h-[136px]"
+                          className="object-cover rounded w-[100px] h-[100px] md:w-[144px] md:h-[136px] hover:opacity-80 transition-opacity cursor-pointer"
                         />
-                      </div>
+                      </Link>
 
                       {/* Product Info */}
                       <div className="flex-1 flex flex-col justify-between">
                         <div>
-                          <h3 className="font-semibold text-lg mb-1">{item.product.name}</h3>
+                          <Link 
+                            href={`/shop/product/${item.product.slug}`}
+                            className="hover:text-[#9f1d25] transition-colors"
+                          >
+                            <h3 className="font-semibold text-lg mb-1">{item.product.name}</h3>
+                          </Link>
                           {item.product.category_name && (
                             <p className="text-sm text-muted-foreground">Danh mục: {item.product.category_name}</p>
                           )}
