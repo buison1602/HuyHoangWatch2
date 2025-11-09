@@ -49,27 +49,27 @@ export function ProductCard({ product }: ProductCardProps) {
             <div className="flex items-start gap-2 flex-wrap text-sm">
               <h3 className="font-semibold">{product.name}</h3>
               
-              <span>–</span>
+              <span>-</span>
               
               <span>{product.category_name}</span>
               
               {!isAccessory && product.brand_name && (
                 <>
-                  <span>–</span>
+                  <span>-</span>
                   <span className="font-medium">{product.brand_name}</span>
                 </>
               )}
               
               {!isAccessory && (
                 <>
-                  <span>–</span>
+                  <span>-</span>
                   <span>{translateGender(product.gender)}</span>
                 </>
               )}
               
               {!isAccessory && (
                 <>
-                  <span>–</span>
+                  <span>-</span>
                   <span>{translateStrapType(product.strap_type)}</span>
                 </>
               )}

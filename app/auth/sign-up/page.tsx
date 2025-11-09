@@ -65,7 +65,7 @@ export default function SignUpPage() {
         options: {
           redirectTo:
             typeof window !== "undefined"
-              ? `${window.location.origin}/shop`
+              ? `${window.location.origin}/auth/callback?next=/shop`
               : undefined,
         },
       })

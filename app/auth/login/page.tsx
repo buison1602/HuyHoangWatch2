@@ -66,12 +66,12 @@ export default function LoginPage() {
     setError(null)
 
     try {
-      // redirectTo: sau khi Google login xong sẽ quay về trang /shop
+      // redirectTo: sau khi Google login xong sẽ quay về callback để xử lý session
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
           redirectTo: typeof window !== "undefined"
-            ? `${window.location.origin}/shop`
+            ? `${window.location.origin}/auth/callback?next=/shop`
             : undefined,
         },
       })

@@ -187,7 +187,7 @@ export default function CartPage() {
             <CardContent className="p-8 text-center">
               <p className="text-muted-foreground mb-4">Giỏ hàng của bạn trống</p>
               <Link href="/shop">
-                <Button>Tiếp tục mua sắm</Button>
+                <Button className="bg-[#9f1d25] hover:bg-[#8a1920]">Tiếp tục mua sắm</Button>
               </Link>
             </CardContent>
           </Card>
@@ -247,7 +247,12 @@ export default function CartPage() {
                               +
                             </Button>
                           </div>
-                          <Button variant="destructive" size="sm" onClick={() => handleRemove(item.id)}>
+                          <Button 
+                            variant="destructive" 
+                            size="sm" 
+                            onClick={() => handleRemove(item.id)}
+                            className="hidden md:inline-flex"
+                          >
                             Xóa
                           </Button>
                         </div>
