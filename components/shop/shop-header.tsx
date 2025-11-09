@@ -74,9 +74,9 @@ export function ShopHeader() {
           Đồng hồ Huy Hoàng
         </Link>
         <nav className="flex items-center gap-4">
-          <Link href="/shop" className="text-sm hover:underline">
+          {/* <Link href="/shop" className="text-sm hover:underline">
             Cửa hàng
-          </Link>
+          </Link> */}
           <Link href="/cart" className="relative text-sm hover:underline">
             Giỏ hàng
             {cartCount > 0 && (
