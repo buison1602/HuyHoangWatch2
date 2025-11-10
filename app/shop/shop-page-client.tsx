@@ -213,7 +213,7 @@ export default function ShopPageClient({
                 />
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
               </div>
-              <p className="mt-4 text-lg font-semibold group-hover:text-[#9f1d25] transition-colors duration-300">
+              <p className="mt-4 text-base font-semibold text-gray-600 group-hover:text-[#9f1d25] transition-colors duration-300">
                 BST ĐỒNG HỒ NAM HOT
               </p>
             </Link>
@@ -233,7 +233,7 @@ export default function ShopPageClient({
                 />
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
               </div>
-              <p className="mt-4 text-lg font-semibold group-hover:text-[#9f1d25] transition-colors duration-300">
+              <p className="mt-4 text-base font-semibold text-gray-600 group-hover:text-[#9f1d25] transition-colors duration-300">
                 BST ĐỒNG HỒ NỮ ĐẸP
               </p>
             </Link>
@@ -253,8 +253,30 @@ export default function ShopPageClient({
                 />
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
               </div>
-              <p className="mt-4 text-lg font-semibold group-hover:text-[#9f1d25] transition-colors duration-300">
+              <p className="mt-4 text-base font-semibold text-gray-600 group-hover:text-[#9f1d25] transition-colors duration-300">
                 ĐỒNG HỒ ĐEO TAY MỚI VỀ
+              </p>
+            </Link>
+          </div>
+
+          {/* BST ĐỒNG HỒ ĐÔI - Centered */}
+          <div className="mt-12 flex justify-center">
+            <Link 
+              href="/danh-muc/dong-ho-cap-doi"
+              className="w-full md:w-auto text-center group max-w-md"
+            >
+              <div className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300">
+                <Image
+                  src="/images/banner_capdoi.jpg"
+                  alt="Bộ sưu tập đồng hồ đôi"
+                  width={400}
+                  height={500}
+                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+              </div>
+              <p className="mt-4 text-base font-semibold text-gray-600 group-hover:text-[#9f1d25] transition-colors duration-300">
+                BST ĐỒNG HỒ ĐÔI
               </p>
             </Link>
           </div>
