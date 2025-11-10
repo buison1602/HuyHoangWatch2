@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect, useCallback, useMemo } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useState, useEffect, useCallback } from "react"
+import { useRouter } from "next/navigation"
 import { ShopHeader } from "@/components/shop/shop-header"
 import { CategoryBar } from "@/components/shop/category-bar"
 import { ProductGrid } from "@/components/shop/product-grid"
@@ -29,20 +29,13 @@ interface Brand {
   name: string
 }
 
-interface BrandData {
-  id: string
+interface StrapInfo {
+  strapType: string
   name: string
-  slug: string
   description: string
-  banner_url: string | null
-}
-
-interface CategoryData {
-  id: string
-  name: string
-  slug: string
-  description: string
-  banner_url: string | null
+  bannerUrl: string
+  metaTitle: string
+  metaDescription: string
 }
 
 interface Product {
@@ -59,10 +52,9 @@ interface Product {
   slug?: string
 }
 
-interface CategoryBrandPageClientProps {
-  type: "brand" | "category"
-  brandData?: BrandData
-  categoryData?: CategoryData
+interface StrapMaterialPageClientProps {
+  strapType: string
+  strapInfo: StrapInfo
   categories: Category[]
   brands: Brand[]
 }
@@ -75,22 +67,19 @@ const SORT_OPTIONS = [
   { value: "best-selling", label: "Bán chạy" },
 ]
 
-export function CategoryBrandPageClient({
-  type,
-  brandData,
-  categoryData,
+export function StrapMaterialPageClient({
+  strapType,
+  strapInfo,
   categories,
   brands,
-}: CategoryBrandPageClientProps) {
+}: StrapMaterialPageClientProps) {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const supabase = createClient()
 
   // Parse filters from URL hash
   const [selectedGender, setSelectedGender] = useState<string[]>([])
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-  const [selectedStrap, setSelectedStrap] = useState<string[]>([])
   const [sortBy, setSortBy] = useState("default")
   
   const [products, setProducts] = useState<Product[]>([])
@@ -100,28 +89,9 @@ export function CategoryBrandPageClient({
   
   const pageSize = 24
 
-  const data = type === "brand" ? brandData : categoryData
-
-  // Determine gender filter based on category slug (memoized to prevent infinite loop)
-  const categoryGender = useMemo(() => {
-    const categoryGenderMap: Record<string, string> = {
-      'dong-ho-nam': 'male',
-      'dong-ho-nu': 'female',
-      'dong-ho-cap-doi': 'unisex',
-    }
-    return type === "category" && categoryData?.slug 
-      ? categoryGenderMap[categoryData.slug] 
-      : null
-  }, [type, categoryData?.slug])
-
   // Fetch products based on filters
   const fetchProducts = useCallback(async () => {
     setLoading(true)
-
-    // Check if current page is accessory page
-    const isAccessoryPage = type === "category" && 
-      categoryData && 
-      (categoryData.slug === 'day-da-dong-ho' || categoryData.slug === 'khoa')
 
     let query = supabase
       .from("products")
@@ -131,26 +101,11 @@ export function CategoryBrandPageClient({
         brands(id, name)
       `, { count: "exact" })
 
-    // Apply base filter (brand or category)
-    if (type === "brand" && brandData) {
-      query = query.eq("brand_id", brandData.id)
-      
-      // Exclude accessories from brand pages
-      if (!isAccessoryPage) {
-        query = query.not("categories.name", "in", '("Phụ kiện Dây đồng hồ","Phụ kiện Khóa đồng hồ")')
-      }
-    } else if (type === "category" && categoryData) {
-      // For gender-specific categories, only filter by gender (not category_id)
-      if (categoryGender) {
-        query = query.eq("gender", categoryGender)
-        // Exclude accessories from gender pages
-        query = query.not("categories.name", "in", '("Phụ kiện Dây đồng hồ","Phụ kiện Khóa đồng hồ")')
-      } else {
-        // For regular categories, filter by category_id
-        query = query.eq("category_id", categoryData.id)
-        // No need to exclude if already filtering by specific category
-      }
-    }
+    // Filter by strap_type (main filter for this page)
+    query = query.eq("strap_type", strapType)
+
+    // Exclude accessories
+    query = query.not("categories.name", "in", '("Phụ kiện Dây đồng hồ","Phụ kiện Khóa đồng hồ")')
 
     // Apply additional filters
     if (selectedGender.length > 0) {
@@ -161,9 +116,6 @@ export function CategoryBrandPageClient({
     }
     if (selectedCategories.length > 0) {
       query = query.in("category_id", selectedCategories)
-    }
-    if (selectedStrap.length > 0) {
-      query = query.in("strap_type", selectedStrap)
     }
 
     // Apply sorting
@@ -221,7 +173,7 @@ export function CategoryBrandPageClient({
     }
 
     setLoading(false)
-  }, [type, brandData, categoryData, categoryGender, selectedGender, selectedBrands, selectedCategories, selectedStrap, sortBy, page, supabase])
+  }, [strapType, selectedGender, selectedBrands, selectedCategories, sortBy, page, supabase])
 
   useEffect(() => {
     fetchProducts()
@@ -240,9 +192,6 @@ export function CategoryBrandPageClient({
     if (selectedCategories.length > 0) {
       params.set("pa_danh-muc", selectedCategories.join(","))
     }
-    if (selectedStrap.length > 0) {
-      params.set("pa_chat-lieu-day", selectedStrap.join(","))
-    }
     if (sortBy !== "default") {
       params.set("sort", sortBy)
     }
@@ -253,7 +202,7 @@ export function CategoryBrandPageClient({
     const hash = params.toString()
     const newUrl = hash ? `#${hash}` : window.location.pathname
     window.history.replaceState({}, "", newUrl)
-  }, [selectedGender, selectedBrands, selectedCategories, selectedStrap, sortBy, page])
+  }, [selectedGender, selectedBrands, selectedCategories, sortBy, page])
 
   useEffect(() => {
     updateURLHash()
@@ -273,11 +222,6 @@ export function CategoryBrandPageClient({
   const handleToggleCategory = (id: string) => {
     setPage(1)
     setSelectedCategories(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id])
-  }
-
-  const handleToggleStrap = (s: string) => {
-    setPage(1)
-    setSelectedStrap(prev => prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s])
   }
 
   const handleSortChange = (value: string) => {
@@ -302,42 +246,38 @@ export function CategoryBrandPageClient({
         selectedCategories={selectedCategories}
         selectedBrands={selectedBrands}
         selectedGender={selectedGender}
-        selectedStrap={selectedStrap}
+        selectedStrap={[strapType]} // Pre-select current strap type
         selectedAccessories={[]}
         selectedServices={[]}
         onToggleCategory={handleToggleCategory}
         onToggleBrand={handleToggleBrand}
         onToggleGender={handleToggleGender}
-        onToggleStrap={handleToggleStrap}
+        onToggleStrap={() => {}} // Disable strap toggle on this page
         onToggleAccessory={() => {}}
         onToggleService={() => {}}
         enableNavigation={true}
       />
 
       {/* Title & Description above banner */}
-      {data && (
-        <div className="container mx-auto px-4 mt-[40px] mb-4">
-          <div className="text-center">
-            <p className="text-[#676767] text-xl font-bold">
-              {data.description}
-            </p>
-          </div>
+      <div className="container mx-auto px-4 mt-[40px] mb-4">
+        <div className="text-center">
+          <p className="text-[#676767] text-xl font-bold">
+            {strapInfo.description}
+          </p>
         </div>
-      )}
+      </div>
 
       {/* Banner */}
-      {data?.banner_url && (
-        <div className="container mx-auto px-4">
-          <Image
-            src={data.banner_url}
-            alt={data.name}
-            width={1920}
-            height={400}
-            className="w-full h-auto object-cover rounded-lg"
-            priority
-          />
-        </div>
-      )}
+      <div className="container mx-auto px-4">
+        <Image
+          src={strapInfo.bannerUrl}
+          alt={strapInfo.name}
+          width={1920}
+          height={400}
+          className="w-full h-auto object-cover rounded-lg"
+          priority
+        />
+      </div>
 
       <div className="container mx-auto px-4 py-8">
         {/* Sort & Count */}

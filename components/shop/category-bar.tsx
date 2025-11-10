@@ -116,6 +116,26 @@ export function CategoryBar({
     }
   }
 
+  // Helper to handle strap type click - navigate to strap material page
+  const handleStrapClick = (strapValue: string) => {
+    if (enableNavigation) {
+      // Map strap type to slug
+      const strapSlugMap: Record<string, string> = {
+        'leather': 'dong-ho-day-da',
+        'metal': 'dong-ho-day-kim-loai',
+        'rubber': 'dong-ho-day-cao-su',
+        'fabric': 'dong-ho-day-vai',
+      }
+      const slug = strapSlugMap[strapValue]
+      if (slug) {
+        router.push(`/chat-lieu-day/${slug}`)
+      }
+    } else {
+      // Original filter behavior
+      onToggleStrap(strapValue)
+    }
+  }
+
   // Helper to handle accessory click - navigate to category page
   const handleAccessoryClick = (accessoryValue: string) => {
     if (enableNavigation) {
@@ -220,7 +240,7 @@ export function CategoryBar({
         id: opt.value,
         label: opt.label,
         selected: selectedStrap.includes(opt.value),
-        onToggle: () => onToggleStrap(opt.value),
+        onToggle: () => handleStrapClick(opt.value),
       })),
     },
     {
