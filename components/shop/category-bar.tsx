@@ -338,31 +338,16 @@ export function CategoryBar({
                   {expandedMobileMenu === menu.id && menu.items.length > 0 && (
                     <div className="bg-card border-t">
                       {menu.items.map((item) => (
-                        enableNavigation ? (
-                          <button
-                            key={item.id}
-                            onClick={() => {
-                              item.onToggle()
-                              setIsMobileMenuOpen(false)
-                            }}
-                            className="w-full text-left px-4 py-2 hover:bg-accent cursor-pointer transition-colors text-sm"
-                          >
-                            {item.label}
-                          </button>
-                        ) : (
-                          <label
-                            key={item.id}
-                            className="flex items-center gap-3 px-4 py-2 hover:bg-accent cursor-pointer transition-colors"
-                          >
-                            <input
-                              type="checkbox"
-                              checked={item.selected}
-                              onChange={item.onToggle}
-                              className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-2 focus:ring-primary cursor-pointer"
-                            />
-                            <span className="text-sm">{item.label}</span>
-                          </label>
-                        )
+                        <button
+                          key={item.id}
+                          onClick={() => {
+                            item.onToggle()
+                            setIsMobileMenuOpen(false)
+                          }}
+                          className="w-full text-left px-4 py-2 hover:bg-accent cursor-pointer transition-colors text-sm"
+                        >
+                          {item.label}
+                        </button>
                       ))}
                     </div>
                   )}
@@ -418,28 +403,13 @@ export function CategoryBar({
                   <div className="absolute left-0 top-full min-w-[250px] bg-card border border-border shadow-lg rounded-b-md">
                     <div className="py-2 max-h-[400px] overflow-y-auto">
                       {menu.items.map((item) => (
-                        enableNavigation ? (
-                          <button
-                            key={item.id}
-                            onClick={item.onToggle}
-                            className="w-full text-left px-4 py-2 hover:bg-accent cursor-pointer transition-colors text-sm"
-                          >
-                            {item.label}
-                          </button>
-                        ) : (
-                          <label
-                            key={item.id}
-                            className="flex items-center gap-3 px-4 py-2 hover:bg-accent cursor-pointer transition-colors"
-                          >
-                            <input
-                              type="checkbox"
-                              checked={item.selected}
-                              onChange={item.onToggle}
-                              className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-2 focus:ring-primary cursor-pointer"
-                            />
-                            <span className="text-sm">{item.label}</span>
-                          </label>
-                        )
+                        <button
+                          key={item.id}
+                          onClick={item.onToggle}
+                          className="w-full text-left px-4 py-2 hover:bg-accent cursor-pointer transition-colors text-sm"
+                        >
+                          {item.label}
+                        </button>
                       ))}
                     </div>
                   </div>
