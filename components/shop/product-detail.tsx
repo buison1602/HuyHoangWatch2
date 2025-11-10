@@ -89,7 +89,9 @@ export function ProductDetail({ product, images, category, categories, brands, s
 
   const handleAddToCart = async () => {
     if (!user) {
-      router.push("/auth/login")
+      // Lưu URL hiện tại để redirect về sau khi login
+      const currentPath = window.location.pathname
+      router.push(`/auth/login?redirectTo=${encodeURIComponent(currentPath)}`)
       return
     }
 

@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 import Image from "next/image"
 
@@ -20,6 +20,8 @@ export default function SignUpPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const redirectTo = searchParams.get("redirectTo") || "/shop"
 
   // Đăng ký bằng email / mật khẩu
   const handleSignUp = async (e: React.FormEvent) => {
@@ -65,7 +67,7 @@ export default function SignUpPage() {
         options: {
           redirectTo:
             typeof window !== "undefined"
-              ? `${window.location.origin}/auth/callback?next=/shop`
+              ? `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirectTo)}`
               : undefined,
         },
       })
@@ -165,7 +167,7 @@ export default function SignUpPage() {
               <div className="mt-4 text-center text-sm">
                 Bạn đã có tài khoản rồi?{" "}
                 <Link
-                  href="/auth/login"
+                  href={`/auth/login${redirectTo !== "/shop" ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""}`}
                   className="underline underline-offset-4"
                 >
                   Đăng nhập

@@ -27,8 +27,10 @@ export async function updateSession(request: NextRequest) {
 
   // OPTIMIZATION: Only call getUser() for protected routes
   const isProtectedRoute = request.nextUrl.pathname.startsWith("/admin") || 
-                          request.nextUrl.pathname.startsWith("/checkout") ||
-                          request.nextUrl.pathname.startsWith("/cart")
+                          request.nextUrl.pathname.startsWith("/checkout")
+  
+  // Cart không cần bắt buộc login, nhưng nếu có thì sẽ hiển thị items
+  const isCartRoute = request.nextUrl.pathname.startsWith("/cart")
 
   if (isProtectedRoute) {
     const {

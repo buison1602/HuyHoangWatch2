@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 import Image from "next/image"
 
@@ -20,6 +20,8 @@ export default function LoginPage() {
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
 
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const redirectTo = searchParams.get("redirectTo") || "/shop"
 
   // Đăng nhập bằng email / mật khẩu
   const handleLogin = async (e: React.FormEvent) => {
@@ -50,7 +52,8 @@ export default function LoginPage() {
         router.push("/admin")
       }
       else {
-        router.push("/shop")
+        // Redirect về trang được yêu cầu hoặc /shop
+        router.push(redirectTo)
       }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "Có lỗi xảy ra")
@@ -71,7 +74,7 @@ export default function LoginPage() {
         provider: "google",
         options: {
           redirectTo: typeof window !== "undefined"
-            ? `${window.location.origin}/auth/callback?next=/shop`
+            ? `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirectTo)}`
             : undefined,
         },
       })
@@ -167,7 +170,7 @@ export default function LoginPage() {
               <div className="mt-4 text-center text-sm">
                 Bạn chưa có tài khoản?{" "}
                 <Link
-                  href="/auth/sign-up"
+                  href={`/auth/sign-up${redirectTo !== "/shop" ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""}`}
                   className="underline underline-offset-4"
                 >
                   Đăng ký
