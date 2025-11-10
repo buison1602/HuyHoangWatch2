@@ -9,6 +9,7 @@ import { ShopFooter } from "@/components/shop/shop-footer"
 import { FacebookFAB } from "@/components/shop/facebook-fab"
 import { ZaloFAB } from "@/components/shop/zalo-fab"
 import Image from "next/image"
+import Link from "next/link"
 
 interface Category {
   id: string
@@ -197,36 +198,65 @@ export default function ShopPageClient({
 
           {/* Collection Images - Responsive */}
           <div className="mt-12 flex flex-col md:flex-row gap-6 md:gap-[60px] justify-center items-center">
-            <div className="w-full md:w-auto text-center">
-              <Image
-                src="/images/bst-dong-ho-nam-hot.jfif"
-                alt="Bộ sưu tập đồng hồ nam hot"
-                width={400}
-                height={500}
-                className="w-full h-auto object-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow"
-              />
-              <p className="mt-4 text-lg">BST ĐỒNG HỒ NAM HOT</p>
-            </div>
-            <div className="w-full md:w-auto text-center">
-              <Image
-                src="/images/BST-dong-ho-nu-hot.jfif"
-                alt="Bộ sưu tập đồng hồ nữ hot"
-                width={400}
-                height={500}
-                className="w-full h-auto object-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow"
-              />
-              <p className="mt-4 text-lg">BST ĐỒNG HỒ NỮ ĐẸP</p>
-            </div>
-            <div className="w-full md:w-auto text-center">
-              <Image
-                src="/images/BST-dong-ho-moi-ve.jfif"
-                alt="Bộ sưu tập đồng hồ mới về"
-                width={400}
-                height={500}
-                className="w-full h-auto object-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow"
-              />
-              <p className="mt-4 text-lg">ĐỒNG HỒ ĐEO TAY MỚI VỀ</p>
-            </div>
+            {/* BST ĐỒNG HỒ NAM HOT */}
+            <Link 
+              href="/danh-muc/dong-ho-nam"
+              className="w-full md:w-auto text-center group"
+            >
+              <div className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300">
+                <Image
+                  src="/images/bst-dong-ho-nam-hot.jfif"
+                  alt="Bộ sưu tập đồng hồ nam hot"
+                  width={400}
+                  height={500}
+                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+              </div>
+              <p className="mt-4 text-lg font-semibold group-hover:text-[#9f1d25] transition-colors duration-300">
+                BST ĐỒNG HỒ NAM HOT
+              </p>
+            </Link>
+
+            {/* BST ĐỒNG HỒ NỮ ĐẸP */}
+            <Link 
+              href="/danh-muc/dong-ho-nu"
+              className="w-full md:w-auto text-center group"
+            >
+              <div className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300">
+                <Image
+                  src="/images/BST-dong-ho-nu-hot.jfif"
+                  alt="Bộ sưu tập đồng hồ nữ hot"
+                  width={400}
+                  height={500}
+                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+              </div>
+              <p className="mt-4 text-lg font-semibold group-hover:text-[#9f1d25] transition-colors duration-300">
+                BST ĐỒNG HỒ NỮ ĐẸP
+              </p>
+            </Link>
+
+            {/* ĐỒNG HỒ ĐEO TAY MỚI VỀ */}
+            <Link 
+              href="/brand/seiko"
+              className="w-full md:w-auto text-center group"
+            >
+              <div className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300">
+                <Image
+                  src="/images/BST-dong-ho-moi-ve.jfif"
+                  alt="Bộ sưu tập đồng hồ mới về"
+                  width={400}
+                  height={500}
+                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+              </div>
+              <p className="mt-4 text-lg font-semibold group-hover:text-[#9f1d25] transition-colors duration-300">
+                ĐỒNG HỒ ĐEO TAY MỚI VỀ
+              </p>
+            </Link>
           </div>
         </div>
       </div>
