@@ -30,6 +30,18 @@ export function ProductCard({ product }: ProductCardProps) {
   // Check if product is an accessory (hide brand, gender, strap_type)
   const isAccessory = product.category_name === 'Phụ kiện Dây đồng hồ' || product.category_name === 'Phụ kiện Khóa đồng hồ'
 
+  // Combine all info into a single string separated by ' - '
+  const combinedInfo = [
+    product.name,
+    product.category_name,
+    !isAccessory && product.brand_name ? product.brand_name : null,
+    !isAccessory ? translateGender(product.gender) : null,
+    !isAccessory ? translateStrapType(product.strap_type) : null,
+    product.description
+  ]
+    .filter(Boolean) // Remove null/undefined values
+    .join(' - ')
+
   return (
     <Link href={`/shop/product/${product.slug || product.id}`} className="block h-full">
       <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full group gap-0">
@@ -44,43 +56,16 @@ export function ProductCard({ product }: ProductCardProps) {
             />
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col items-start gap-2 p-1 lg:p-2">
+        <CardFooter className="flex flex-col items-start gap-2 p-1 px-6 lg:p-2 lg:px-6">
           <div className="w-full group-hover:text-[#cf2e2e] transition-colors">
-            <div className="flex items-start gap-1 flex-wrap text-sm">
-              <h3 className="font-semibold">{product.name}</h3>
-              
-              <span>-</span>
-              
-              <span>{product.category_name}</span>
-              
-              {!isAccessory && product.brand_name && (
-                <>
-                  <span>-</span>
-                  <span className="font-medium">{product.brand_name}</span>
-                </>
-              )}
-              
-              {!isAccessory && (
-                <>
-                  <span>-</span>
-                  <span>{translateGender(product.gender)}</span>
-                </>
-              )}
-              
-              {!isAccessory && (
-                <>
-                  <span>-</span>
-                  <span>{translateStrapType(product.strap_type)}</span>
-                </>
-              )}
-            </div>
-            
-            {/* Description with ellipsis if too long - hidden on mobile, max 1 line */}
-            <p className="hidden lg:block text-sm line-clamp-1 mt-1">{product.description}</p>
+            {/* Combined info in a single paragraph with max 4 lines - centered */}
+            <p className="text-sm line-clamp-4 text-center">
+              {combinedInfo}
+            </p>
           </div>
           
-          {/* Price at bottom */}
-          <div className="w-full">
+          {/* Price at bottom - centered */}
+          <div className="w-full text-center">
             <span className="text-lg font-bold">{formatCurrency(product.price)}</span>
           </div>
         </CardFooter>
