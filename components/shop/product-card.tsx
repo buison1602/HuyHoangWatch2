@@ -32,14 +32,14 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Link href={`/shop/product/${product.slug || product.id}`} className="block h-full">
-      <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full group">
+      <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full group gap-0">
         <CardContent className="p-0">
-          <div className="relative h-40 lg:h-64 w-full bg-muted">
+          <div className="relative h-40 md:h-48 lg:h-56 w-full bg-white">
             <Image 
               src={product.image_url || "/placeholder.svg"} 
               alt={altText}
               fill 
-              className="object-cover"
+              className="object-contain"
               loading="lazy"
             />
           </div>
