@@ -33,7 +33,7 @@ export function ProductCard({ product }: ProductCardProps) {
   // Combine all info into a single string separated by ' - '
   const combinedInfo = [
     product.name,
-    product.category_name,
+    // product.category_name,
     !isAccessory && product.brand_name ? product.brand_name : null,
     !isAccessory ? translateGender(product.gender) : null,
     !isAccessory ? translateStrapType(product.strap_type) : null,
@@ -56,7 +56,7 @@ export function ProductCard({ product }: ProductCardProps) {
             />
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col items-start gap-2 p-1 px-5 lg:p-2 lg:px-5">
+        <CardFooter className="flex flex-col items-start gap-2 p-1 px-4 lg:p-2 lg:px-5">
           <div className="w-full group-hover:text-[#cf2e2e] transition-colors">
             {/* Combined info in a single paragraph with max 4 lines - centered */}
             <p className="text-sm line-clamp-4 text-center">
