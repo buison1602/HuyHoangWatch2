@@ -176,7 +176,7 @@ export function ProductDetail({ product, images, category, categories, brands, s
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         <div className="flex flex-col gap-4">
-          <div className="relative w-full h-[500px] md:h-[700px] bg-muted rounded-lg overflow-hidden">
+          <div className="relative w-full h-[500px] md:h-[700px] bg-white rounded-lg overflow-hidden">
             <Image
               src={currentImage.image_url || "/placeholder.svg"}
               alt={currentImage.alt_text || product.name}
@@ -221,7 +221,7 @@ export function ProductDetail({ product, images, category, categories, brands, s
         <div className="flex flex-col gap-6">
           <div>
             <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
-            <p className="text-2xl font-semibold text-primary">{formatCurrency(product.price)}</p>
+            <p className="text-2xl font-semibold text-[#9f1d25]">{formatCurrency(product.price)}</p>
           </div>
 
           <Card>
