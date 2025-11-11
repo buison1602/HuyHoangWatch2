@@ -34,7 +34,7 @@ export function ProductCard({ product }: ProductCardProps) {
     <Link href={`/shop/product/${product.slug || product.id}`} className="block h-full">
       <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full group">
         <CardContent className="p-0">
-          <div className="relative h-64 w-full bg-muted">
+          <div className="relative h-40 lg:h-64 w-full bg-muted">
             <Image 
               src={product.image_url || "/placeholder.svg"} 
               alt={altText}
@@ -75,8 +75,8 @@ export function ProductCard({ product }: ProductCardProps) {
               )}
             </div>
             
-            {/* Description with ellipsis if too long */}
-            <p className="text-sm line-clamp-2 mt-2">{product.description}</p>
+            {/* Description with ellipsis if too long - hidden on mobile */}
+            <p className="hidden lg:block text-sm line-clamp-2 mt-2">{product.description}</p>
           </div>
           
           {/* Price at bottom */}
