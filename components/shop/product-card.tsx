@@ -44,9 +44,9 @@ export function ProductCard({ product }: ProductCardProps) {
             />
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col items-start gap-4 p-2 lg:p-4">
+        <CardFooter className="flex flex-col items-start gap-2 p-1 lg:p-2">
           <div className="w-full group-hover:text-[#cf2e2e] transition-colors">
-            <div className="flex items-start gap-2 flex-wrap text-sm">
+            <div className="flex items-start gap-1 flex-wrap text-sm">
               <h3 className="font-semibold">{product.name}</h3>
               
               <span>-</span>
@@ -75,8 +75,8 @@ export function ProductCard({ product }: ProductCardProps) {
               )}
             </div>
             
-            {/* Description with ellipsis if too long - hidden on mobile */}
-            <p className="hidden lg:block text-sm line-clamp-2 mt-2">{product.description}</p>
+            {/* Description with ellipsis if too long - hidden on mobile, max 1 line */}
+            <p className="hidden lg:block text-sm line-clamp-1 mt-1">{product.description}</p>
           </div>
           
           {/* Price at bottom */}
