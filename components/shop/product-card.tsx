@@ -33,7 +33,6 @@ export function ProductCard({ product }: ProductCardProps) {
   // Combine all info into a single string separated by ' - '
   const combinedInfo = [
     product.name,
-    // product.category_name,
     !isAccessory && product.brand_name ? product.brand_name : null,
     !isAccessory ? translateGender(product.gender) : null,
     !isAccessory ? translateStrapType(product.strap_type) : null,
